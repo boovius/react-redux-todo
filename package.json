@@ -34,6 +34,7 @@
     "deep-freeze": "0.0.1",
     "expect": "^1.16.0",
     "file-loader": "^0.8.5",
+    "mocha": "^2.4.5",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
   }
