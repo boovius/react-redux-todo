@@ -25,6 +25,7 @@
   "homepage": "https://github.com/boovius/react-redux-todo#readme",
   "dependencies": {
     "react": "^15.0.1",
+    "react-dom": "^15.0.1",
     "redux": "^3.4.0"
   },
   "devDependencies": {
