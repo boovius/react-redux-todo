@@ -1,6 +1,6 @@
 import deepFreeze from 'deep-freeze';
 import expect from 'expect';
-import { todos } from '../app/reducers/index';
+import { todos } from '../app/reducers/todos';
 
 describe('todos', () => {
   describe('ADD_TODO', () => {

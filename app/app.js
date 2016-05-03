@@ -1,9 +1,9 @@
 import { createStore } from 'redux';
-import { todos } from './reducers';
+import { todoApp } from './reducers';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-let store = createStore(todos);
+let store = createStore(todoApp);
 
 let nextTodoId = 0;
 
@@ -45,7 +45,7 @@ class TodoApp extends React.Component {
 
 const render = () => {
   ReactDOM.render(
-    <TodoApp todos={store.getState()}/>,
+    <TodoApp todos={store.getState().todos}/>,
     document.getElementById('root')
   )
   console.log(store.getState());
