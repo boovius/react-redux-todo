@@ -1,9 +1,9 @@
 import { createStore } from 'redux';
-import { todoApp } from './reducers';
+import { todos } from './reducers';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-let store = createStore(todoApp);
+let store = createStore(todos);
 
 let nextTodoId = 0;
 
@@ -21,12 +21,22 @@ class TodoApp extends React.Component {
         >
           Add Todo
         </button>
+        <button onClick={() => {
+          store.dispatch({
+            type: 'TOGGLE_TODO',
+            id: nextTodoId-1
+          })
+        }}
+        >
+          Toggle Last
+        </button>
         <ul>
-          {this.props.todos}.map(todo =>
-            <li key={todo.id}>
-              {todo.text}
-            </li>
-          )
+          {this.props.todos.map((todo) =>
+             <li key={todo.id}>
+               {todo.text} - 
+               {todo.completed ? 'completed' : 'not'}
+             </li>
+           )}
         </ul>
       </div>
     )
@@ -35,9 +45,10 @@ class TodoApp extends React.Component {
 
 const render = () => {
   ReactDOM.render(
-    <TodoApp todos={store.getState().todos}/>,
+    <TodoApp todos={store.getState()}/>,
     document.getElementById('root')
   )
+  console.log(store.getState());
 }
 
 store.subscribe(render);
