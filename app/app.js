@@ -27,15 +27,6 @@ class TodoApp extends React.Component {
         </button>
         <button onClick={() => {
           store.dispatch({
-            type: 'TOGGLE_TODO',
-            id: nextTodoId-1
-          })
-        }}
-        >
-          Toggle Last
-        </button>
-        <button onClick={() => {
-          store.dispatch({
             type: 'SET_VISIBILITY_FILTER',
             filter: 'HIDE_COMPLETED'
           })
@@ -43,8 +34,17 @@ class TodoApp extends React.Component {
           Hide Completed
         </button>
         <ul>
-          {this.props.todos.map((todo) =>
+          {this.props.todos.map(todo =>
              <li key={todo.id}>
+               <button onClick={() => {
+                 store.dispatch({
+                   type: 'TOGGLE_TODO',
+                   id: todo.id
+                 })
+               }}
+               >
+                 Toggle
+               </button>
                {todo.text} - 
                {todo.completed ? 'completed' : 'not'}
              </li>
