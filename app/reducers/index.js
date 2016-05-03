@@ -13,10 +13,12 @@ const todo = (state = {}, action) => {
         ...state,
         completed: !state.completed
       }
+    default:
+      return state;
   }
 }
 
-const todos  = (state = [], action) => {
+export const todos  = (state = [], action) => {
   switch(action.type) {
     case('ADD_TODO'):
       return [
@@ -24,11 +26,13 @@ const todos  = (state = [], action) => {
         todo({id: state.length}, action)
       ]
     case('TOGGLE_TODO'):
-      return [
-        ...state.slice(0, action.id),
-        todo(state[action.id], action),
-        ...state.slice([action.id+1])
-      ]
+      return state.map((item) => {
+        if (item.id !== action.id) {
+          return item;
+        } else {
+          return todo(item, action);
+        }
+      })
     default:
       return state;
   }
@@ -46,4 +50,4 @@ const visibilityFilter = (
   }
 }
 
-export const todoApp = combineReducers({todos, visibilityFilter});
+//export const todoApp = combineReducers({todos, visibilityFilter});

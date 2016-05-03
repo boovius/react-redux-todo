@@ -27,51 +27,82 @@ describe('todos', () => {
   });
 
   describe('TOGGLE_TODO', () => {
-    const stateBefore = [
-      {
-        id: 0,
-        text: 'Learn Relay',
-        completed: false
-      },
-      {
+    describe('given valid id of todo', () => {
+      const stateBefore = [
+        {
+          id: 0,
+          text: 'Learn Relay',
+          completed: false
+        },
+        {
+          id: 1,
+          text: 'Learn Redux',
+          completed: false
+        },
+        {
+          id: 2,
+          text: 'Learn Velocity',
+          completed: false
+        }
+      ];
+      const action = {
+        type: 'TOGGLE_TODO',
         id: 1,
-        text: 'Learn Redux',
-        completed: false
-      },
-      {
-        id: 1,
-        text: 'Learn Velocity',
-        completed: false
-      }
-    ];
-    const action = {
-      type: 'TOGGLE_TODO',
-      id: 1,
-    };
+      };
 
-    const stateAfter = [
-      {
-        id: 0,
-        text: 'Learn Relay',
-        completed: false
-      },
-      {
-        id: 1,
-        text: 'Learn Redux',
-        completed: true
-      },
-      {
-        id: 1,
-        text: 'Learn Velocity',
-        completed: false
-      }
-    ];
+      const stateAfter = [
+        {
+          id: 0,
+          text: 'Learn Relay',
+          completed: false
+        },
+        {
+          id: 1,
+          text: 'Learn Redux',
+          completed: true
+        },
+        {
+          id: 2,
+          text: 'Learn Velocity',
+          completed: false
+        }
+      ];
 
-    deepFreeze(stateBefore);
-    deepFreeze(action);
+      deepFreeze(stateBefore);
+      deepFreeze(action);
 
-    it('toggles the completed field on the todo', () => {
-      expect(todos(stateBefore, action)).toEqual(stateAfter);
+      it('toggles the completed field on the todo', () => {
+        expect(todos(stateBefore, action)).toEqual(stateAfter);
+      });
+    });
+
+    describe('invalid todo id', () => {
+      const stateBefore = [
+        {
+          id: 0,
+          text: 'Learn Relay',
+          completed: false
+        },
+      ];
+      const action = {
+        type: 'TOGGLE_TODO',
+        id: 1,
+      };
+
+      const stateAfter = [
+        {
+          id: 0,
+          text: 'Learn Relay',
+          completed: false
+        },
+      ];
+
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+
+      it('state does not change', () => {
+        expect(todos(stateBefore, action)).toEqual(stateAfter);
+      });
     });
   });
 });
