@@ -5,10 +5,51 @@ import ReactDOM from 'react-dom';
 
 let store = createStore(todoApp);
 
+const FilterLink = ({
+  filter,
+  children,
+  currentFilter
+}) => {
+  if (filter === currentFilter) {
+    return <span> {children} </span>;
+  }
+  return (
+    <a href='#'
+       onClick={e => {
+         e.preventDefault();
+         store.dispatch({
+           type: 'SET_VISIBILITY_FILTER',
+           filter
+         });
+       }}
+    >
+      {children}
+    </a>
+  )
+}
+
+const getVisibleTodos = (
+  todos,
+  filter
+) => {
+  switch (filter) {
+    case 'SHOW_ALL':
+      return todos;
+    case 'SHOW_COMPLETED':
+      return todos.filter(todo => todo.completed);
+    case 'SHOW_ACTIVE':
+      return todos.filter(todo => !todo.completed);
+    default:
+      return todos;
+  }
+}
+
 let nextTodoId = 0;
 
 class TodoApp extends React.Component {
   render() {
+    const { todos, visibilityFilter } = this.props;
+    const visibleTodos = getVisibleTodos(todos, visibilityFilter);
     return (
       <div>
         <input ref={ node => {
@@ -25,31 +66,44 @@ class TodoApp extends React.Component {
         >
           Add Todo
         </button>
-        <button onClick={() => {
-          store.dispatch({
-            type: 'SET_VISIBILITY_FILTER',
-            filter: 'HIDE_COMPLETED'
-          })
-        }}>
-          Hide Completed
-        </button>
         <ul>
-          {this.props.todos.map(todo =>
-             <li key={todo.id}>
-               <button onClick={() => {
+          {visibleTodos.map(todo =>
+             <li key={todo.id} onClick={() => {
                  store.dispatch({
                    type: 'TOGGLE_TODO',
                    id: todo.id
                  })
                }}
+               style={{
+                 textDecoration: 
+                   todo.completed ? 'line-through' : 'none'
+               }}
                >
-                 Toggle
-               </button>
-               {todo.text} - 
-               {todo.completed ? 'completed' : 'not'}
+               {todo.text}
              </li>
            )}
         </ul>
+        <p>
+          Show:
+          {' '}
+          <FilterLink filter='SHOW_ALL'
+            currentFilter={visibilityFilter}
+            >
+            All
+          </FilterLink>
+          {', '}
+          <FilterLink filter='SHOW_COMPLETED'
+            currentFilter={visibilityFilter}
+            >
+            Completed
+          </FilterLink>
+          {', '}
+          <FilterLink filter='SHOW_ACTIVE'
+            currentFilter={visibilityFilter}
+            >
+            Active
+          </FilterLink>
+        </p>
       </div>
     )
   }
@@ -57,7 +111,7 @@ class TodoApp extends React.Component {
 
 const render = () => {
   ReactDOM.render(
-    <TodoApp todos={store.getState().todos}/>,
+    <TodoApp {...store.getState()}/>,
     document.getElementById('root')
   )
   console.log(store.getState());
