@@ -5,6 +5,23 @@ import ReactDOM from 'react-dom';
 
 let store = createStore(todoApp);
 
+const Todo = ({
+  handleClick,
+  completed,
+  text
+}) => {
+  return (
+    <li
+      onClick={handleClick}
+      style={{
+        textDecoration: completed ? 'line-through' : 'none'
+      }}
+      >
+      {text}
+    </li>
+  )
+}
+
 const FilterLink = ({
   filter,
   children,
@@ -67,21 +84,7 @@ class TodoApp extends React.Component {
           Add Todo
         </button>
         <ul>
-          {visibleTodos.map(todo =>
-             <li key={todo.id} onClick={() => {
-                 store.dispatch({
-                   type: 'TOGGLE_TODO',
-                   id: todo.id
-                 })
-               }}
-               style={{
-                 textDecoration: 
-                   todo.completed ? 'line-through' : 'none'
-               }}
-               >
-               {todo.text}
-             </li>
-           )}
+          {visibleTodos.map(todo => <Todo key = {todo.id} {...todo}/>)}
         </ul>
         <p>
           Show:
