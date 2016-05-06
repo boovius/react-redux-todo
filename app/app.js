@@ -6,7 +6,6 @@ import AddTodo from './components/containers/add_todo';
 import VisibleTodos from './components/containers/visible_todos';
 import Footer from './components/presenters/footer';
 
-
 const TodoApp = () => (
   <div>
     <AddTodo />
