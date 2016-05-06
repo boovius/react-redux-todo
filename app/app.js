@@ -128,40 +128,37 @@ const FilterLink = ({
   )
 }
 
-class TodoApp extends React.Component {
-  render() {
-    const { todos, visibilityFilter } = this.props;
-    const visibleTodos = getVisibleTodos(todos, visibilityFilter);
-    return (
-      <div>
-        <AddTodo
-          processInput={text =>
-            store.dispatch({
-              type: 'ADD_TODO',
-              text: text
-            })
-          }
-        />
-        <TodosList
-          todos={visibleTodos}
-          handleTodoClick={(id) => {
-            store.dispatch({
-              type: 'TOGGLE_TODO',
-              id
-          })
-        }} />
-      <Footer
-        visibilityFilter={visibilityFilter}
-        onFilterLinkClick={filter =>
-          store.dispatch({
-            type: 'SET_VISIBILITY_FILTER',
-            filter
-          })
-        }
-      />
-      </div>
-    )
-  }
+const TodoApp = ({
+  todos,
+  visibilityFilter
+}) => {
+  <div>
+    <AddTodo
+      processInput={text =>
+        store.dispatch({
+          type: 'ADD_TODO',
+          text: text
+        })
+      }
+    />
+    <TodosList
+      todos={getVisibleTodos(todos, visibilityFilter)}
+      handleTodoClick={(id) => {
+        store.dispatch({
+          type: 'TOGGLE_TODO',
+          id
+      })
+    }} />
+    <Footer
+      visibilityFilter={visibilityFilter}
+      onFilterLinkClick={filter =>
+        store.dispatch({
+          type: 'SET_VISIBILITY_FILTER',
+          filter
+        })
+      }
+    />
+  </div>
 }
 
 const render = () => {
