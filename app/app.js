@@ -25,34 +25,30 @@ const Todo = ({
   handleClick,
   completed,
   text
-}) => {
-  return (
-    <li
-      onClick={handleClick}
-      style={{
-        textDecoration: completed ? 'line-through' : 'none'
-      }}
-      >
-      {text}
-    </li>
-  )
-}
+}) => (
+  <li
+    onClick={handleClick}
+    style={{
+      textDecoration: completed ? 'line-through' : 'none'
+    }}
+    >
+    {text}
+  </li>
+)
 
 const TodosList = ({
   todos,
   handleTodoClick
-}) => {
-  return (
-    <ul>
-      {todos.map(todo =>
-        <Todo key={todo.id}
-          {...todo}
-          handleClick={() => {handleTodoClick(todo.id)}}
-        />
-      )}
-    </ul>
-  )
-}
+}) => (
+  <ul>
+    {todos.map(todo =>
+      <Todo key={todo.id}
+        {...todo}
+        handleClick={() => {handleTodoClick(todo.id)}}
+      />
+    )}
+  </ul>
+)
 
 const AddTodo = ({
   processInput
@@ -78,34 +74,32 @@ const AddTodo = ({
 const Footer = ({
   visibilityFilter,
   onFilterLinkClick
-}) => {
-  return (
-    <p>
-      Show:
-      {' '}
-      <FilterLink filter='SHOW_ALL'
-        currentFilter={visibilityFilter}
-        onClick={onFilterLinkClick}
-        >
-        All
-      </FilterLink>
-      {', '}
-      <FilterLink filter='SHOW_COMPLETED'
-        currentFilter={visibilityFilter}
-        onClick={onFilterLinkClick}
-        >
-        Completed
-      </FilterLink>
-      {', '}
-      <FilterLink filter='SHOW_ACTIVE'
-        currentFilter={visibilityFilter}
-        onClick={onFilterLinkClick}
-        >
-        Active
-      </FilterLink>
-    </p>
-  )
-}
+}) => (
+  <p>
+    Show:
+    {' '}
+    <FilterLink filter='SHOW_ALL'
+      currentFilter={visibilityFilter}
+      onClick={onFilterLinkClick}
+      >
+      All
+    </FilterLink>
+    {', '}
+    <FilterLink filter='SHOW_COMPLETED'
+      currentFilter={visibilityFilter}
+      onClick={onFilterLinkClick}
+      >
+      Completed
+    </FilterLink>
+    {', '}
+    <FilterLink filter='SHOW_ACTIVE'
+      currentFilter={visibilityFilter}
+      onClick={onFilterLinkClick}
+      >
+      Active
+    </FilterLink>
+  </p>
+)
 
 const FilterLink = ({
   filter,
@@ -131,7 +125,7 @@ const FilterLink = ({
 const TodoApp = ({
   todos,
   visibilityFilter
-}) => {
+}) => (
   <div>
     <AddTodo
       processInput={text =>
@@ -159,7 +153,7 @@ const TodoApp = ({
       }
     />
   </div>
-}
+)
 
 const render = () => {
   ReactDOM.render(
