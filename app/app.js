@@ -1,7 +1,15 @@
-import { createStore } from 'redux';
-import { todoApp } from './reducers';
+//react
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+//redux
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+//reducers
+import { todoApp } from './reducers';
+
+//components
 import AddTodo from './components/containers/add_todo';
 import VisibleTodos from './components/containers/visible_todos';
 import Footer from './components/presenters/footer';
@@ -13,21 +21,6 @@ const TodoApp = () => (
     <Footer />
   </div>
 )
-
-class Provider extends React.Component {
-  getChildContext() {
-    return {
-      store: this.props.store
-    }
-  }
-
-  render() {
-    return this.props.children;
-  }
-}
-Provider.childContextTypes = {
-  store: React.PropTypes.object
-}
 
 ReactDOM.render(
   <Provider store={createStore(todoApp)}>
