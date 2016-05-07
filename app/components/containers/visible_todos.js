@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import TodosList from '../presenters/todos_list';
 
 const getVisibleTodos = (
@@ -17,37 +18,30 @@ const getVisibleTodos = (
   }
 }
 
-export default class VisibleTodos extends React.Component {
-  componentDidMount() {
-    const { store } = this.context;
-    this.unsubscribe = store.subscribe(() =>
-      this.forceUpdate()
-    );
-  }
-
-  componentWilUnmount() {
-    this.unsubscribe();
-  }
-
-  render() {
-    const { store } = this.context;
-    const { todos, visibilityFilter } = store.getState();
-    return (
-      <TodosList
-        todos={
-          getVisibleTodos(todos, visibilityFilter)
-        }
-        onTodoClick={id =>
-          store.dispatch({
-            type: 'TOGGLE_TODO',
-            id
-          })
-        }
-      />
+const mapStateToProps = (state) => {
+  return {
+    todos: getVisibleTodos(
+      state.todos,
+      state.visibilityFilter
     )
-  }
-}
-
-VisibleTodos.contextTypes = {
-  store: React.PropTypes.object
+  };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTodoClick: (id) => {
+      dispatch({
+        type: 'TOGGLE_TODO',
+        id
+      });
+    }
+  };
+};
+
+const VisibleTodos = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodosList);
+
+export default VisibleTodos;
+
