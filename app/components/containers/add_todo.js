@@ -1,10 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const AddTodo = (
-  props, context
-) => {
+let AddTodo = ( { dispatch } ) => {
   let input;
-  let store = context.store;
 
   return (
     <div>
@@ -13,7 +11,7 @@ const AddTodo = (
         }}
       />
       <button onClick={() => {
-          store.dispatch({
+          dispatch({
             type: 'ADD_TODO',
             text: input.value
           });
@@ -26,8 +24,6 @@ const AddTodo = (
   )
 }
 
-AddTodo.contextTypes = {
-  store: React.PropTypes.object
-}
+AddTodo = connect()(AddTodo);
 
 export default AddTodo;
