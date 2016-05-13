@@ -22,8 +22,14 @@ const TodoApp = () => (
   </div>
 )
 
+let store = createStore(todoApp);
+
+if (module.hot) {
+  module.hot.accept()
+}
+
 ReactDOM.render(
-  <Provider store={createStore(todoApp)}>
+  <Provider store={store}>
     <TodoApp />
   </Provider>,
   document.getElementById('root')

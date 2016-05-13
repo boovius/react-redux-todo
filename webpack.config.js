@@ -1,18 +1,27 @@
+var path = require('path');
+var webpack = require('webpack');
+
 module.exports = {
   context: __dirname + "/app",
-  entry: {
-    javascript: "./app.js",
-    html: "./index.html",
-  },
+  entry: [
+    'webpack-hot-middleware/client',
+    './index',
+  ],
 
   output: {
-    path: __dirname + "/dist",
-    publicPath: "http://localhost:8080/",
+    path: path.join(__dirname, "/dist"),
+    publicPath: "/static/",
     filename: "app.js",
   },
+
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+  ],
+
   module: {
     loaders: [
-
       {
         test: /\.js$/,
         exclude: /node_modules/,
